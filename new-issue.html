@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report New Issue - AlertHawk</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="components/navbar.js"></script>
+    <script src="components/sidebar.js"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <custom-navbar></custom-navbar>
+    
+    <div class="flex h-screen pt-16">
+        <custom-sidebar></custom-sidebar>
+        
+        <main class="flex-1 p-6 overflow-y-auto">
+            <div class="bg-white rounded-lg shadow p-6 mb-6">
+                <h1 class="text-2xl font-semibold mb-6">Report New System Issue</h1>
+                
+                <form id="issueForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="system" class="block text-sm font-medium text-gray-700 mb-1">Affected System</label>
+                            <select id="system" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                <option value="">Select a system</option>
+                                <option>Payment Gateway</option>
+                                <option>User Authentication</option>
+                                <option>Database Cluster</option>
+                                <option>API Gateway</option>
+                                <option>Notification Service</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="severity" class="block text-sm font-medium text-gray-700 mb-1">Severity Level</label>
+                            <select id="severity" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                <option value="">Select severity</option>
+                                <option class="text-red-600">Critical - Complete outage</option>
+                                <option class="text-orange-600">High - Major functionality impaired</option>
+                                <option class="text-yellow-600">Medium - Partial functionality impaired</option>
+                                <option class="text-blue-600">Low - Minor impact</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Issue Title</label>
+                        <input type="text" id="title" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Brief description of the issue">
+                    </div>
+                    
+                    <div>
+                        <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Detailed Description</label>
+                        <textarea id="description" rows="6" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Describe the issue in detail..."></textarea>
+                    </div>
+                    
+                    <div>
+                        <label for="steps" class="block text-sm font-medium text-gray-700 mb-1">Steps to Reproduce</label>
+                        <textarea id="steps" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="(If applicable) Steps to reproduce the issue..."></textarea>
+                    </div>
+                    
+                    <div>
+                        <label for="screenshots" class="block text-sm font-medium text-gray-700 mb-1">Screenshots or Logs</label>
+                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                            <div class="space-y-1 text-center">
+                                <div class="flex text-sm text-gray-600">
+                                    <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none">
+                                        <span>Upload files</span>
+                                        <input id="file-upload" name="file-upload" type="file" class="sr-only" multiple>
+                                    </label>
+                                    <p class="pl-1">or drag and drop</p>
+                                </div>
+                                <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3">
+                        <a href="/" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md flex items-center">
+                            <i data-feather="x" class="mr-2"></i> Cancel
+                        </a>
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md flex items-center">
+                            <i data-feather="alert-circle" class="mr-2"></i> Report Issue
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        feather.replace();
+        
+        document.getElementById('issueForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Form data collection
+            const issueData = {
+                system: document.getElementById('system').value,
+                severity: document.getElementById('severity').value,
+                title: document.getElementById('title').value,
+                description: document.getElementById('description').value,
+                steps: document.getElementById('steps').value,
+                reporter: currentUser.name,
+                date: new Date().toISOString()
+            };
+            
+            // In a real app, you would send this to your backend
+            console.log('New issue reported:', issueData);
+            
+            // Show success message and redirect
+            alert('Issue reported successfully! The team will investigate shortly.');
+            window.location.href = '/';
+        });
+    </script>
+    <script src="script.js"></script>
+    <script src="components/navbar.js"></script>
+    <script src="components/sidebar.js"></script>
+</body>
+</html>
